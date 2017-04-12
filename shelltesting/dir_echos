@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "This is PWD"
+echo $PWD
+
+echo "This is BASH_SOURCE"
+echo $BASH_SOURCE
+
+echo "This is BASH_SOURCE[0]"
+echo ${BASH_SOURCE[0]}
+
+echo "This is BASH_SOURCE[*]"
+echo ${BASH_SOURCE[*]}
+
+echo "This is Dollarsign 0"
+echo $0
