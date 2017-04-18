@@ -23,3 +23,7 @@ echo
 echo "Using dirname"
 echo $(dirname BASH_SOURCE[0])
 echo
+
+echo "Absolute Location of execute shell script"
+echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+echo
