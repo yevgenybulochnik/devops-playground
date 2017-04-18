@@ -20,10 +20,20 @@ echo "This is Dollarsign 0"
 echo $0
 echo
 
-echo "Using dirname"
-echo $(dirname BASH_SOURCE[0])
+echo "Using dirname and BASH_SOURCE"
+echo $(dirname {BASH_SOURCE[0]})
+echo
+<<NOTE
+dirname simply gives you the path of whatever is after it without the specified file. So..
+/home/ubuntu/workspace/dir_echoes --> /home/ubuntu/workspace/
+above returns . when run
+NOTE
+
+echo "Test of dirname in variable"
+TS="$(dirname "${BASH_SOURCE[0]}")"
+echo $TS
 echo
 
-echo "Absolute Location of execute shell script"
+echo "Absolute path of executed shell script"
 echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo
