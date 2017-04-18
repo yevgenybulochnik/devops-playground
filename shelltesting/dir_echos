@@ -1,15 +1,25 @@
 #!/bin/bash
+echo
 echo "This is PWD"
 echo $PWD
+echo
 
 echo "This is BASH_SOURCE"
 echo $BASH_SOURCE
+echo
 
 echo "This is BASH_SOURCE[0]"
 echo ${BASH_SOURCE[0]}
+echo
 
 echo "This is BASH_SOURCE[*]"
 echo ${BASH_SOURCE[*]}
+echo
 
 echo "This is Dollarsign 0"
 echo $0
+echo
+
+echo "Using dirname"
+echo $(dirname BASH_SOURCE[0])
+echo
