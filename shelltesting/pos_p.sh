@@ -15,3 +15,8 @@ echo $VAR_4
 #three
 #four
 #printed to the terminal
+
+if [ "$VAR_1" = "hello" ]
+then
+    echo "Hello World"
+fi
