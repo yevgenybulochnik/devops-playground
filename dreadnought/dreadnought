@@ -1,0 +1,28 @@
+Four virtual machines
+
+1. LB   -> runs HAProxy to route all requests and acts as an SSH bastion
+2. Web1 -> runs Wordpress and Magento 2 (blog.example.com and shop.example.com)
+3. Web2 -> runs NodeBB (forum.example.com)
+4. Data -> runs MongoDB and MySQL
+
+                      Web1
+                    /      \
+User Request -> LB           Data
+                    \      /
+                      Web2
+
+- A user should be able to clone the project and run `vagrant up`, then navigate their browser to any
+  of the aforementioned web addresses and see the desired application
+- The entire process should be automated.
+
+- The project should handle modifying the users host file so `shop.example.com`, `blog.example.com`,
+  and `forum.example.com` all resolve to the IP address of LB
+- All four guest VM's should have their host file modified as well. No IP addresses should be used for
+  any internal network connections or configuration, everything should be done by hostname
+
+- There should be a user present on all four guests that matches the user who runs `vagrant up`
+- The public SSH key on the users host (~/.ssh/id_rsa.pub) should be associated with the aforementioned
+  user account on all four guests
+- The user should be able to SSH into Web1, Web2, or Data, using LB as an 'SSH bastion host'
+- The user should be able to access Web1, Web2, and Data from LB by hostname (`web1`, `web2`, and `data`, respectively)
+-- Example: `ssh <username>@lb` -> `ssh web`
