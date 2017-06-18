@@ -7,12 +7,12 @@ class VM
     self.box = options[:box] || 'ubuntu/xenial64'
     self.cpus = options[:cpus] || '1'
     self.memory = options[:memory] || '512'
-    self.provisioner = './'+ options[:hostname] +"/"+ options[:hostname] +"_config.sh"
+    self.provisioner = options[:provisioner] || "./#{options[:hostname]}/#{options[:hostname]}_config.sh"
   end
 end
 
 nodes  = [
-  VM.new(hostname: 'lb1'),
+  VM.new(hostname: 'lb1'), # option to use specific path with provisioner: path/to/file
   VM.new(hostname: 'web1'),
   VM.new(hostname: 'web2'),
   VM.new(hostname: 'data'),
