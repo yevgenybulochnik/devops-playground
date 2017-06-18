@@ -1,51 +1,34 @@
 # vi: set ft=ruby:
 
-lb = {
-  hostname: 'lb',
-  box: 'ubuntu/xenial64',
-  cpus: '1',
-  memory: '512',
-  provisioner_path: './lb_config.sh'
-}
+class VM
+  attr_accessor :hostname, :box, :cpus, :memory
+  def initialize(options ={})
+    self.hostname = options[:hostname]
+    self.box = options[:box] || 'ubuntu/xenial64'
+    self.cpus = options[:cpus] || '1'
+    self.memory = options[:memory] || '512'
+  end
+end
 
-web1 = {
-  hostname: 'web1',
-  box: 'ubuntu/xenial64',
-  cpus: '1',
-  memory: '512',
-  provisioner_path: './web1_config.sh'
-}
-
-web2 = {
-  hostname: 'web2',
-  box: 'ubuntu/xenial64',
-  cpus: '1',
-  memory: '512',
-  provisioner_path: './web2_config.sh'
-}
-
-data = {
-  hostname: 'data',
-  box: 'ubuntu/xenial64',
-  cpus: '1',
-  memory: '512',
-  provisioner_path: './data_config.sh'
-}
-
-virtual_machines = [lb, web1, web2, data]
+nodes  = [
+  VM.new(hostname: 'lb1'),
+  VM.new(hostname: 'web1'),
+  VM.new(hostname: 'web2'),
+  VM.new(hostname: 'data'),
+]
 
 Vagrant.configure("2") do |config|
-  virtual_machines.each do |machine|
-    config.vm.define machine[:hostname] do |machine_config|
-      machine_config.vm.box = machine[:box]
-      machine_config.vm.hostname = machine[:hostname]
-      machine_config.vm.network :public_network
-      machine_config.vm.provider :virtualbox do |vbox|
-        vbox.name = machine[:hostname]
-        vbox.memory = machine[:memory]
-        vbox.cpus = machine[:cpus]
+  nodes.each do |node|
+    config.vm.define node.hostname do |node_config|
+      node_config.vm.box = node.box
+      node_config.vm.hostname = node.hostname
+      node_config.vm.network :public_network
+      node_config.vm.provider :virtualbox do |vbox|
+        vbox.name = node.hostname
+        vbox.memory = node.memory
+        vbox.cpus = node.cpus
       end
-      machine_config.vm.provision "shell", path: machine[:provisioner_path]
+      #node_config.vm.provision "shell", path: node[:provisioner_path]
     end
   end
 end
