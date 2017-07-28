@@ -1,4 +1,5 @@
-# Raspberry Pi Zero W Headless Setup 
+setup not currently working as of 7/28/2017
+# Raspberry Pi Zero W Headless Setup
 
 This document outlines the process behind setting up a Raspberry Pi Zero W for headless starting. The Pi Zero does not have a wired ethernet port connection, so wifi has to be preconfigured in order to ssh into the machine. This setup uses windows as a host machine to flash the micro sd card and preconfigure ssh/wifi
 
