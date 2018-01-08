@@ -68,11 +68,14 @@ mysg.authorize_ingress(
 print('Security Group Created')
 
 # Ec2 launch instance
-user_data = """#!/bin/bash
+username = ''
+password = ''
+domain = ''
+
+user_data = f"""#!/bin/bash
 git clone https://github.com/yevgenybulochnik/ttyjs-provisioner.git /tmp/tp
-./tmp/tp/ttyjs_provisioner.sh yevgeny 12345 yevgenybulochnik
+./tmp/tp/ttyjs_provisioner.sh {username} {password} {domain}
 """
-# Note change hardcoded tty.js variables when running this script. Future update will obfuscate these variables
 
 instances = ec2.create_instances(
         ImageId='ami-0def3275',
