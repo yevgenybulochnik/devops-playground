@@ -109,7 +109,7 @@ print(instance_ip)
 # Route53 setup
 r53 = boto3.client('route53')
 response = r53.create_hosted_zone(
-    Name='yevgenybulochnik.com',
+    Name=f'{domain}.com',
     CallerReference=exc_time
 )
 
@@ -123,7 +123,7 @@ r53.change_resource_record_sets(
             {
                 'Action': 'CREATE',
                 'ResourceRecordSet': {
-                    'Name': 'www.yevgenybulochnik.com',
+                    'Name': f'www.{domain}.com',
                     'Type': 'A',
                     'TTL': 300,
                     'ResourceRecords': [
@@ -136,11 +136,11 @@ r53.change_resource_record_sets(
             {
                 'Action': 'CREATE',
                 'ResourceRecordSet': {
-                    'Name': 'yevgenybulochnik.com',
+                    'Name': f'{domain}.com',
                     'Type': 'A',
                     'AliasTarget': {
                         'HostedZoneId': zone_id[12:],
-                        'DNSName': 'www.yevgenybulochnik.com',
+                        'DNSName': f'www.{domain}.com',
                         'EvaluateTargetHealth': False
                     }
                 }
@@ -148,12 +148,12 @@ r53.change_resource_record_sets(
             {
                 'Action': 'CREATE',
                 'ResourceRecordSet': {
-                    'Name': '*.yevgenybulochnik.com',
+                    'Name': f'*.{domain}.com',
                     'Type': 'CNAME',
                     'TTL': 300,
                     'ResourceRecords': [
                         {
-                            'Value': 'www.yevgenybulochnik.com'
+                            'Value': f'www.{domain}.com'
                         }
                     ]
                 }
@@ -165,6 +165,6 @@ r53.change_resource_record_sets(
 # Domain nameservers update
 r53domains = boto3.client('route53domains')
 r53domains.update_domain_nameservers(
-    DomainName='yevgenybulochnik.com',
+    DomainName=f'{domain}.com',
     Nameservers=[dict(Name=pn) for pn in nameservers]
 )
