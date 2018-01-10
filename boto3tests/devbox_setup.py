@@ -1,5 +1,6 @@
 import boto3
 import datetime
+import traceback
 
 exc_time = datetime.datetime.now().strftime('%m/%d/%y-%H:%M:%S')
 print(f'Script start time {exc_time}')
@@ -7,65 +8,68 @@ print(f'Script start time {exc_time}')
 ec2 = boto3.resource('ec2', region_name='us-west-2')
 
 # Security Group Setup
-mysg = ec2.create_security_group(
-    GroupName='devbox',
-    Description='Open to home and cell'
-)
-mysg.authorize_ingress(
-    IpPermissions=[
-        {
-            'FromPort': 80,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': '0.0.0.0/0'
-                }
-            ],
-            'ToPort': 80,
-            'Ipv6Ranges': [
-                {
-                    'CidrIpv6': '::/0'
-                }
-            ]
-        },
-        {
-            'FromPort': 443,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': '0.0.0.0/0'
-                }
-            ],
-            'ToPort': 443,
-            'Ipv6Ranges': [
-                {
-                    'CidrIpv6': '::/0'
-                }
-            ]
-        },
-        {
-            'FromPort': 22,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': '24.22.29.161/32'
-                }
-            ],
-            'ToPort': 22,
-        },
-        {
-            'FromPort': 22,
-            'IpProtocol': 'tcp',
-            'IpRanges': [
-                {
-                    'CidrIp': '66.87.113.231/32'
-                }
-            ],
-            'ToPort': 22,
-        },
-    ]
-)
-print('Security Group Created')
+try:
+    mysg = ec2.create_security_group(
+        GroupName='devbox',
+        Description='Open to home and cell'
+    )
+    mysg.authorize_ingress(
+        IpPermissions=[
+            {
+                'FromPort': 80,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': '0.0.0.0/0'
+                    }
+                ],
+                'ToPort': 80,
+                'Ipv6Ranges': [
+                    {
+                        'CidrIpv6': '::/0'
+                    }
+                ]
+            },
+            {
+                'FromPort': 443,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': '0.0.0.0/0'
+                    }
+                ],
+                'ToPort': 443,
+                'Ipv6Ranges': [
+                    {
+                        'CidrIpv6': '::/0'
+                    }
+                ]
+            },
+            {
+                'FromPort': 22,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': '24.22.29.161/32'
+                    }
+                ],
+                'ToPort': 22,
+            },
+            {
+                'FromPort': 22,
+                'IpProtocol': 'tcp',
+                'IpRanges': [
+                    {
+                        'CidrIp': '66.87.113.231/32'
+                    }
+                ],
+                'ToPort': 22,
+            },
+        ]
+    )
+    print('Security Group Created')
+except:
+    traceback.print_exc()
 
 # Ec2 launch instance
 username = ''
