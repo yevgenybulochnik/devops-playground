@@ -13,12 +13,20 @@ for instance in ec2.instances.filter():
         security_group = '----'
 
     try:
-        name = instance.tags[0]['Value']
-    except TypeError:
+        tag_dict = {}
+        for tag in instance.tags:
+            tag_dict[tag['Key']] = tag['Value']
+        if 'Name' in tag_dict:
+            name = tag_dict['Name']
+        if 'Domain' in tag_dict:
+            domain = tag_dict['Domain']
+    except:
         name = '----'
+        domain = '----'
 
     data.append({
         'Name': name,
+        'Domain': domain,
         'State': instance.state['Name'],
         'Sec_Gr': security_group,
         'Id': instance.id,
