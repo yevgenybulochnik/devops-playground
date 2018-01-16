@@ -11,8 +11,14 @@ for instance in ec2.instances.filter():
         security_group = instance.security_groups[0]['GroupName']
     except IndexError:
         security_group = '----'
+
+    try:
+        name = instance.tags[0]['Value']
+    except TypeError:
+        name = '----'
+
     data.append({
-        'Name': instance.tags[0]['Value'],
+        'Name': name,
         'State': instance.state['Name'],
         'Sec_Gr': security_group,
         'Id': instance.id,
