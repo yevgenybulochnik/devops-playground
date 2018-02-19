@@ -41,30 +41,30 @@ Docker tutorial from the official [docker docs](https://docs.docker.com).
     ```
 + Run an Image
     ```
-    docker run -p 4000:80 <image-name>      # port mapping 4000<host>:80<docker-process>
-    docker run -d -p 4000:80 <image-name>   # run in detached mode
+    docker run -p 4000:80 <image-name>                  # port mapping 4000<host>:80<docker-process>
+    docker run -d -p 4000:80 <image-name>               # run in detached mode
     ```
 + Container Commands
     ```
-    docker container ls             # list running containers
-    docker container ls -a          # list all containers
-    docker container stop <hash>    # gracefully stop running container
-    docker container kill <hash>    # force shutdown
-    docker container rm <hash>      # remove container from machine
-    docker container rm $(docker container ls -a -q) # remove all containers from machine
+    docker container ls                                 # list running containers
+    docker container ls -a                              # list all containers
+    docker container stop <hash>                        # gracefully stop running container
+    docker container kill <hash>                        # force shutdown
+    docker container rm <hash>                          # remove container from machine
+    docker container rm $(docker container ls -a -q)    # remove all containers from machine
     ```
 + Image Commands
     ```
-    docker image ls -a                      # List all images on this machine
-    docker image rm <image id>              # Remove specified image from this machine
-    docker image rm $(docker image ls -a -q)   # Remove all images from this machine
+    docker image ls -a                                  # List all images on this machine
+    docker image rm <image id>                          # Remove specified image from this machine
+    docker image rm $(docker image ls -a -q)            # Remove all images from this machine
     ```
 + Docker Hub Commands
     ```
-    docker login                                # Log in this CLI session using your Docker credentials
-    docker tag <image> username/repository:tag  # Tag <image> for upload to registry
-    docker push username/repository:tag         # Upload tagged image to registry
-    docker run username/repository:tag          # Run image from a registry
+    docker login                                        # Log in this CLI session using your Docker credentials
+    docker tag <image> username/repository:tag          # Tag <image> for upload to registry
+    docker push username/repository:tag                 # Upload tagged image to registry
+    docker run username/repository:tag                  # Run image from a registry
     ```
 
 </details>
