@@ -4,6 +4,7 @@
   "description": "Tutorial for node, express, typescript api ",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
     "build": "gulp scripts"
   },
   "repository": {
