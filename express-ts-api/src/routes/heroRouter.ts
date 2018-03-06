@@ -32,11 +32,36 @@ export class HeroRouter {
     }
   }
 
+  public getByName(req: Request, res: Response, next: NextFunction) {
+    let query = req.params.name;
+    let hero = Heroes.find(hero => strip(hero.name) == query)
+    if (hero) {
+      res.status(200)
+        .send({
+          message: 'Success',
+          status: res.status,
+          hero
+        });
+    } else {
+      res.status(400)
+        .send({
+          message: 'No hero found with given name',
+          status: res.status
+        });
+    }
+  }
+
   init() {
     this.router.get('/', this.getAll);
     this.router.get('/:id', this.getOne);
+    this.router.get('/name/:name', this.getByName);
   }
 }
+
+export function strip(heroName: string): string {
+    let hero = heroName.replace(/\s/g, '')
+    return hero.toLowerCase()
+  }
 
 const heroRoutes = new HeroRouter();
 heroRoutes.init();

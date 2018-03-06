@@ -58,3 +58,41 @@ describe('Get api/v1/heroes/:id', () => {
       });
   });
 })
+
+describe('Get api/v1/heroes/name/:name', () => {
+  it('should return Luke Cage', () => {
+    return chai.request(app).get('/api/v1/heroes/name/lukecage')
+      .then(res => {
+        expect(res.body.hero).to.be.an('object')
+        expect(res.body.hero.name).to.equal('Luke Cage');
+      });
+  })
+});
+
+import { strip } from '../src/routes/heroRouter'
+
+//example single test
+describe('#strip()', () => {
+  it('should return a string stripped and lowered', () => {
+    let name = 'Luke Cage';
+    const result = strip(name);
+    expect(result).to.equal('lukecage');
+  });
+});
+
+//example multi data test
+describe('#strip()', () => {
+  let heroes = {
+    'Luke Cage':'lukecage',
+    'Wolverine':'wolverine',
+    'Spider-Man':'spider-man'
+  }
+  //let nameTest = Object.keys(heroes);
+  //nameTest.forEach((name) =>
+  for (let name in heroes) {
+    it(`should return ${name} striped and lowered, ${heroes[name]}`, () => {
+      const result = strip(name);
+      expect(result, `name=${name}`).to.equal(heroes[name]);
+    })
+  }
+})
