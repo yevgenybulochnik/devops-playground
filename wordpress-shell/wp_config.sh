@@ -50,5 +50,43 @@ apt install -y phpmyadmin php-gettext
 phpenmod mcrypt
 phpenmod mbstring
 
+# Allow .htaccess files
+echo "
+<Directory /var/www/html>
+    AllowOverride ALL
+</Directory>
+" >> /etc/apache2/apache2.conf
+
+# Enable mod_rewrite
+a2enmod rewrite
+
 # Restart apache
 service apache2 restart
+
+# Download WordPress and unzip
+cd /tmp
+curl -O https://wordpress.org/latest.tar.gz # -O/--remote-name
+tar xzvf latest.tar.gz # xzvf -x/--extract -z/--gzip -v/--verbose -f/--file
+
+# .htaccess setup
+touch /tmp/wordpress/.htaccess
+chmod 660 /tmp/wordpress/.htaccess
+
+# Config file setup, upgrade setup
+cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+mkdir /tmp/wordpress/wp-content/upgrade
+
+# Copy to apache www
+cp -a /tmp/wordpress/. /var/www/html # -a/--archive
+
+# Ownership/permission settings
+chown -R www-data:www-data /var/www/html # -R/--recursive
+find /var/www/html -type d -exec chmod g+s {} \;
+chmod g+w /var/www/html/wp-content
+chmod -R g+w /var/www/html/wp-content/themes
+chmod -R g+w /var/www/html/wp-content/plugins
+
+# WordPress db config
+sed -i "/DB_NAME/c\define('DB_NAME', 'wordpress');" /var/www/html/wp-config.php
+sed -i "/DB_USER/c\define('DB_USER', 'wordpressuser');" /var/www/html/wp-config.php
+sed -i "/DB_PASSWORD/c\define('DB_PASSWORD', 'password');" /var/www/html/wp-config.php
