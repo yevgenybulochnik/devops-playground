@@ -24,6 +24,9 @@ nodes  = [
 ]
 
 Vagrant.configure("2") do |config|
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
   nodes.each do |node|
     config.vm.define node.hostname do |node_config|
       node_config.vm.box = node.box
