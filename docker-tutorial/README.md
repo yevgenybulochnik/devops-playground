@@ -66,11 +66,11 @@ Docker tutorial from the official [docker docs](https://docs.docker.com).
     docker push username/repository:tag                 # Upload tagged image to registry
     docker run username/repository:tag                  # Run image from a registry
     ```
-
 </details>
 
 <details>
 <summary><b>Part3: Services</b></summary>
+
 + Swarm Commands
     ```
     docker swarm init                                   # Start docker swarm
