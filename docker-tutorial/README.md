@@ -69,7 +69,7 @@ Docker tutorial from the official [docker docs](https://docs.docker.com).
 </details>
 
 <details>
-<summary><b>Part3: Services</b></summary>
+<summary><b>Part 3: Services</b></summary>
 
 + Swarm Commands
     ```
