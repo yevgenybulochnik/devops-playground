@@ -68,3 +68,28 @@ Docker tutorial from the official [docker docs](https://docs.docker.com).
     ```
 
 </details>
+
+<details>
+<summary><b>Part3: Services</b></summary>
++ Swarm Commands
+    ```
+    docker swarm init                                   # Start docker swarm
+    docker swarm leave --force                          # Take down single node swarm from the manager
+    ```
++ Stack Commands
+    ```
+    docker stack ls                                     # List stacks or apps
+    docker stack deploy -c <composefile> <appname>      # Run the specificed docker-compose file
+    docker stack rm <appname>                           # Tear down application
+    ```
++ Service Commands
+    ```
+    docker service ls                                   # List running services associated with an app
+    docker service ps <servicename>                     # List tasks associated with an app
+    ```
++ Misc
+    ```
+    docker inspect <task or container>                  # Inspect task or container
+    docker container ls -q                              # List container IDs
+    ```
+</details>
