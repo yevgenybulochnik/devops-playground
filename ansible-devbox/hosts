@@ -1,0 +1,5 @@
+[devbox]
+10.70.104.10
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

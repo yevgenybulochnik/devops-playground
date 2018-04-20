@@ -1,0 +1,7 @@
+---
+- hosts: devbox
+  become: yes
+  become_user: root
+  roles:
+    - role: setup_user
+      username: yevgeny
