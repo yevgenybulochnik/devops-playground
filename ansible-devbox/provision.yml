@@ -1,6 +1,8 @@
 ---
 - hosts: devbox
+  vars:
+    username: yevgeny
+    dotfiles_repo: https://github.com/yevgenybulochnik/dotfiles.git
   roles:
-    - role: setup_user
-      username: yevgeny
-      dotfiles_repo: https://github.com/yevgenybulochnik/dotfiles.git
+    - setup_user
+    - apache
