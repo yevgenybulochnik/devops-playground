@@ -7,3 +7,19 @@
     groups:
       - lxd
       - sudo
+
+- name: Check for PSWDLESS Sudo
+  stat:
+    path: "/etc/sudoers.d/{{ username }}"
+  register: sudoers_enabled
+
+- debug:
+    msg: "Sudoers.d file present for {{ username }}"
+  when: sudoers_enabled.stat.exists == True
+
+- name: Add PSWDLESS Sudo for {{ username }}
+  copy:
+    dest: "/etc/sudoers.d/{{ username }}"
+    content: |
+      {{ username }} ALL=(ALL) NOPASSWD:ALL
+  when: sudoers_enabled.stat.exists == False
