@@ -3,6 +3,7 @@
   vars:
     username: yevgeny
     dotfiles_repo: https://github.com/yevgenybulochnik/dotfiles.git
+    install_dotfiles: True
   roles:
     - setup_user
     - apache
