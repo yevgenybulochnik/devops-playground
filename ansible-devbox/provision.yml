@@ -4,6 +4,7 @@
     username: yevgeny
     dotfiles_repo: https://github.com/yevgenybulochnik/dotfiles.git
     install_dotfiles: True
+    ssl_cert: self_signed
   roles:
     - setup_user
     - apache
