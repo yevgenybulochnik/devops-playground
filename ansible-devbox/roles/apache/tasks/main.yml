@@ -28,3 +28,10 @@
     args:
       creates: /etc/apache2/ssl/apache.crt
   when: ssl_cert == "self_signed" and ssl_cert is defined
+
+- name: Generate VirtualHosts
+  template:
+    src: "{{ item }}"
+    dest: "/etc/apache2/sites-available/{{ item | basename | regex_replace('.conf', '')}}.{{ domain }}.conf"
+  with_fileglob:
+    - "../templates/*.conf"
