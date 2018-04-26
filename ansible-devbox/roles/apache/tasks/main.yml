@@ -29,9 +29,41 @@
       creates: /etc/apache2/ssl/apache.crt
   when: ssl_cert == "self_signed" and ssl_cert is defined
 
+- name: Check for default apache sites
+  stat:
+    path: "/etc/apache2/{{ item }}"
+  register: default_sites
+  with_items:
+    - sites-available/000-default.conf
+    - sites-available/default-ssl.conf
+    - sites-enabled/000-default.conf
+
+- name: Remove apache default sites
+  file:
+    path: "{{ item.stat.path }}"
+    state: absent
+  with_items: "{{ default_sites.results }}"
+  when: item.stat.exists == True
+  loop_control:
+    label: "{{ item.item }} Exists: {{ item.stat.exists | string }}"
+
 - name: Generate VirtualHosts
   template:
     src: "{{ item }}"
     dest: "/etc/apache2/sites-available/{{ item | basename | regex_replace('.conf', '')}}.{{ domain }}.conf"
   with_fileglob:
     - "../templates/*.conf"
+
+- block:
+  - name: Get all VirtualHosts
+    command: ls /etc/apache2/sites-available/
+    register: sites
+    changed_when: False
+  - name: Enable All sites
+    command: "a2ensite {{ item }}"
+    args:
+      creates: "/etc/apache2/sites-enabled/{{ item }}"
+    with_items:
+      - "{{sites.stdout_lines}}"
+    notify:
+      - restart apache2

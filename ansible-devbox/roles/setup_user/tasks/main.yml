@@ -3,7 +3,6 @@
   user:
     name: "{{ username }}"
     state: present
-    shell: /bin/bash
     groups:
       - lxd
       - sudo
