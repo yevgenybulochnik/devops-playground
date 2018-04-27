@@ -67,3 +67,14 @@
       - "{{sites.stdout_lines}}"
     notify:
       - restart apache2
+
+- name: Add username:password to .htpasswd
+  copy:
+    dest: "/etc/apache2/.htpasswd"
+    content: |
+      {{ username }}:{{ web_pass }}
+
+- name: Serve base website
+  copy:
+    src: ../templates/index.html
+    dest: "/var/www/{{ domain }}/"

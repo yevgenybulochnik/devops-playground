@@ -6,6 +6,7 @@
     install_dotfiles: True
     domain: yevgenybulochnik.com
     ssl_cert: self_signed
+    web_pass: $apr1$X58cIV88$onWdoj/JHuCNc8Ml/FyKd/
   roles:
     - setup_user
     - apache
