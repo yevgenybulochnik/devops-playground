@@ -1,0 +1,22 @@
+---
+- name: Create webterm dir for gotty
+  file:
+    path: "/home/{{ username }}/webterm"
+    state: directory
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Get gotty binary
+  unarchive:
+    src: https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
+    dest: "/home/{{ username }}/webterm/"
+    remote_src: yes
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Add .gotty config
+  copy:
+    src: ../templates/.gotty
+    dest: "/home/{{ username }}/webterm/"
+    owner: "{{ username }}"
+    group: "{{ username }}"
