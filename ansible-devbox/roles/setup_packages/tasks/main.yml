@@ -36,3 +36,8 @@
     name: nodejs
     state: latest
     update_cache: yes
+
+- name: Install pm2 globaly
+  npm:
+    name: pm2
+    global: yes

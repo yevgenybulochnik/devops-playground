@@ -20,3 +20,20 @@
     dest: "/home/{{ username }}/webterm/"
     owner: "{{ username }}"
     group: "{{ username }}"
+
+- name: Check for gotty service start
+  shell: pm2 list | grep gotty | grep -o online
+  register: gotty_running
+  changed_when: False
+  ignore_errors: True
+  failed_when: no
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Start gotty with pm2
+  command: pm2 start ./gotty -- --config .gotty zsh
+  args:
+    chdir: "/home/{{ username }}/webterm/"
+  become: yes
+  become_user: "{{ username }}"
+  when: gotty_running.stdout != 'online'
