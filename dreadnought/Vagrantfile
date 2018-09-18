@@ -37,9 +37,9 @@ end
 
 nodes  = [
   VM.new(hostname: 'lb1', aliases: %w(example.local)),
+  VM.new(hostname: 'data'),
   VM.new(hostname: 'web1'),
   VM.new(hostname: 'web2'),
-  VM.new(hostname: 'data'),
 ]
 
 Vagrant.configure("2") do |config|
@@ -66,8 +66,9 @@ Vagrant.configure("2") do |config|
         echo "#{username} ALL=(ALL) NOPASSWD:ALL" >  /etc/sudoers.d/#{username}
         mkdir -p /home/#{username}/.ssh/
         echo "#{ssh_key}" > /home/#{username}/.ssh/authorized_keys
+        chown -R #{username}:#{username} /home/#{username}/.ssh
       SHELL
-      node_config.vm.provision "shell", path: node.provisioner
+      node_config.vm.provision "shell", path: node.provisioner, args: "#{username}"
     end
   end
 end
