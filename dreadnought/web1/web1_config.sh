@@ -17,8 +17,9 @@ apt install -y php \
 # Install Apache
 apt install apache2 -y
 
-# Disable default site
+# Disable default site and remove
 a2dissite 000-default.conf
+rm -rf /var/www/html
 
 # Enable mod_rewrite
 a2enmod rewrite
@@ -41,7 +42,7 @@ sudo -iu $VAGRANT_USER wp core download --path=/var/www/blog.dreadnaught.com
 sudo -iu $VAGRANT_USER wp config create \
     --path=/var/www/blog.dreadnaught.com \
     --dbname=wordpress \
-    --dbuser=wordpressuser \
+    --dbuser=wordpress_user \
     --dbpass=password \
     --dbhost=data \
 
@@ -54,3 +55,12 @@ sudo -iu $VAGRANT_USER wp core install \
     --admin_password=password \
     --admin_email=admin@dreadnaught.com \
     --skip-email
+
+# Copy virtualhost files
+cp /vagrant/web1/{blog.conf,shop.conf} /etc/apache2/sites-available/
+
+# Enable virtualhosts
+a2ensite blog.conf shop.conf
+
+# Restart apache
+service apache2 restart

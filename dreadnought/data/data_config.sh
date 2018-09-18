@@ -13,7 +13,11 @@ sed -i "/bind-address/c\bind-address = *" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Create wordpress db
 mysql -u root -prootpassword -e "CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-mysql -u root -prootpassword -e "GRANT ALL ON wordpress.* TO 'wordpressuser'@'web1' IDENTIFIED BY 'password';"
+mysql -u root -prootpassword -e "GRANT ALL ON wordpress.* TO 'wordpress_user'@'web1' IDENTIFIED BY 'password';"
+
+# Create magento db
+mysql -u root -prootpassword -e "CREATE DATABASE magento;"
+mysql -u root -prootpassword -e "GRANT ALL ON magento.* TO 'magento_user'@'web1' IDENTIFIED BY 'password';"
 mysql -u root -prootpassword -e "FLUSH PRIVILEGES;"
 
 # Restart mysql
