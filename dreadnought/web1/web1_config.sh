@@ -4,7 +4,8 @@ VAGRANT_USER=$1
 apt update
 
 # Install PHP
-apt install -y php \
+apt install -y\
+    php \
     libapache2-mod-php \
     php-mcrypt \
     php-mysql \
@@ -31,7 +32,7 @@ apt install mysql-client -y
 curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 chmod +x /usr/local/bin/wp
 
-# Make wp dir
+# Make wordpress dir
 mkdir /var/www/blog.dreadnaught.com
 chown -R $VAGRANT_USER:www-data /var/www/blog.dreadnaught.com
 
@@ -55,6 +56,41 @@ sudo -iu $VAGRANT_USER wp core install \
     --admin_password=password \
     --admin_email=admin@dreadnaught.com \
     --skip-email
+
+# Install magento/composer dependencies
+apt install -y \
+    zip \
+    unzip \
+    php7.0-intl \
+    php7.0-zip
+
+# Make magento dir
+mkdir /var/www/shop.dreadnaught.com
+
+# Get magento/composer and unpack
+wget -P /tmp https://github.com/magento/magento2/archive/2.1.15.tar.gz
+tar zxf /tmp/2.1.15.tar.gz -C /var/www/shop.dreadnaught.com --strip=1
+wget -P /var/www/shop.dreadnaught.com https://getcomposer.org/composer.phar
+cd /var/www/shop.dreadnaught.com
+php composer.phar install
+chown -R www-data:www-data /var/www/shop.dreadnaught.com
+
+# Install magento
+/var/www/shop.dreadnaught.com/bin/magento setup:install \
+    --base-url=http://shop.dreadnaught.com \
+    --db-host=data\
+    --db-name=magento \
+    --db-user=magento_user \
+    --db-password=password\
+    --admin-firstname=Magento \
+    --admin-lastname=User \
+    --admin-email=user@dreadnaught.com \
+    --admin-user=admin \
+    --admin-password=admin123 \
+    --language=en_US \
+    --currency=USD \
+    --timezone=America/Chicago \
+    --use-rewrites=1
 
 # Copy virtualhost files
 cp /vagrant/web1/{blog.conf,shop.conf} /etc/apache2/sites-available/
