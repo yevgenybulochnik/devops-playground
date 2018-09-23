@@ -38,7 +38,7 @@ end
 nodes  = [
   VM.new(hostname: 'lb1'),
   VM.new(hostname: 'data'),
-  VM.new(hostname: 'web1', aliases: %w(blog.dreadnaught.com)),
+  VM.new(hostname: 'web1', aliases: %w(shop.dreadnaught.com)),
   VM.new(hostname: 'web2'),
 ]
 

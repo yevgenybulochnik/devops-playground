@@ -73,24 +73,22 @@ tar zxf /tmp/2.1.15.tar.gz -C /var/www/shop.dreadnaught.com --strip=1
 wget -P /var/www/shop.dreadnaught.com https://getcomposer.org/composer.phar
 cd /var/www/shop.dreadnaught.com
 php composer.phar install
-chown -R www-data:www-data /var/www/shop.dreadnaught.com
 
 # Install magento
 /var/www/shop.dreadnaught.com/bin/magento setup:install \
-    --base-url=http://shop.dreadnaught.com \
-    --db-host=data\
-    --db-name=magento \
-    --db-user=magento_user \
-    --db-password=password\
-    --admin-firstname=Magento \
-    --admin-lastname=User \
-    --admin-email=user@dreadnaught.com \
-    --admin-user=admin \
-    --admin-password=admin123 \
-    --language=en_US \
-    --currency=USD \
-    --timezone=America/Chicago \
-    --use-rewrites=1
+    --base-url='http://shop.dreadnaught.com' \
+    --db-host='data' \
+    --db-name='magento' \
+    --db-user='magento_user' \
+    --db-password='password' \
+    --admin-firstname='Magento' \
+    --admin-lastname='User' \
+    --admin-email='admin@dreadnaught.com' \
+    --admin-user='admin' \
+    --admin-password='admin123'
+
+# Change permissions to www-data
+chown -R www-data:www-data /var/www/shop.dreadnaught.com
 
 # Copy virtualhost files
 cp /vagrant/web1/{blog.conf,shop.conf} /etc/apache2/sites-available/
