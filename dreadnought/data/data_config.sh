@@ -28,3 +28,21 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE7
 echo "deb [ arch=amd64,arm64  ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
 apt update
 apt install -y mongodb-org
+
+# start mongo
+systemctl enable mongod
+systemctl start mongod
+
+sleep 5
+
+# Create admin mongo user
+mongo < /vagrant/data/admin.js
+
+# open mongo on all ips
+sed -i "/bindIp/c\  bindIp: 0.0.0.0" /etc/mongod.conf
+
+# set mongo auth
+sed -i "/security/c\security:\\n\  authorization: 'enabled'" /etc/mongod.conf
+
+# restart mongo
+service mongod restart
