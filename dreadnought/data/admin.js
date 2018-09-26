@@ -1,5 +1,4 @@
-use admin;
-
+db = db.getSiblingDB('admin')
 db.createUser(
   {
     user: "admin", 
