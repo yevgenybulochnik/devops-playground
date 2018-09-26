@@ -37,6 +37,7 @@ sleep 5
 
 # Create admin mongo user
 mongo /vagrant/data/admin.js
+mongo /vagrant/data/nodebb_admin.js
 
 # open mongo on all ips
 sed -i "/bindIp/c\  bindIp: 0.0.0.0" /etc/mongod.conf
