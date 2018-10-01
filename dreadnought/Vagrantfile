@@ -39,7 +39,7 @@ nodes  = [
   VM.new(hostname: 'lb1'),
   VM.new(hostname: 'data'),
   VM.new(hostname: 'web1', aliases: %w(shop.dreadnaught.com)),
-  VM.new(hostname: 'web2'),
+  VM.new(hostname: 'web2', aliases: %w(forum.dreadnaught.com)),
 ]
 
 Vagrant.configure("2") do |config|

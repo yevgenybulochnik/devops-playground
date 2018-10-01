@@ -1,0 +1,14 @@
+{
+  "url": "http://forum.dreadnaught.com:4567",
+  "secret": "6e8e552c-ca4b-48b9-8102-9ca4f920ecba",
+  "database": "mongo",
+  "mongo": {
+    "host": "data",
+    "port": "27017",
+    "username": "nodebb",
+    "password": "nodebbpassword",
+    "database": "nodebb",
+    "uri": ""
+    },
+  "port": "4567"
+}
