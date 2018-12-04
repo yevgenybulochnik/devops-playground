@@ -5,6 +5,10 @@ from app import app
 from app.forms import LoginForm
 from app.models import User
 
+# urllib.parse.unquote_plus required when flask is behind an apache server,
+# this function removes the %2F encoding added to the next parameter
+import urllib.parse
+
 
 @app.route('/')
 @app.route('/index')
@@ -37,7 +41,7 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
-        return redirect(next_page)
+        return redirect(urllib.parse.unquote_plus(next_page))
     return render_template('login.html', title='Sign In', form=form)
 
 
