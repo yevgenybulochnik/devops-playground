@@ -20,6 +20,10 @@ mail = Mail(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
+from app.errors import bp as error_bp
+
+app.register_blueprint(error_bp)
+
 if not app.debug:
     if app.config['MAIL_SERVER']:
         auth = None
@@ -54,4 +58,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Flasktut startup')
 
-from app import routes, models, errors
+from app import routes, models
