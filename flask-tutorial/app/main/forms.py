@@ -15,7 +15,6 @@ from wtforms.validators import (
 )
 from app.models import User
 
-
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])

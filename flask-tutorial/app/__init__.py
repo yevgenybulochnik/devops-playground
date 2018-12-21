@@ -26,6 +26,9 @@ app.register_blueprint(error_bp)
 from app.auth import bp as auth_bp
 app.register_blueprint(auth_bp, url_prefix='/auth')
 
+from app.main import bp as main_bp
+app.register_blueprint(main_bp)
+
 if not app.debug:
     if app.config['MAIL_SERVER']:
         auth = None
@@ -60,4 +63,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Flasktut startup')
 
-from app import routes, models
+from app import models
